@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <EditText
+        android:id="@+id/date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="dd/mm/yyyy"
+        android:maxLength="10" />
+
+    <EditText
+        android:id="@+id/weight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="      kg"
+        android:maxLength="8" />
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/camera_link"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_camera" />
+
+    <ImageView
+        android:id="@+id/checkbox_link"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_directions" />
+
+    <ImageView
+        android:id="@+id/timepicker_link"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_schedule" />
+
+    <ImageView
+        android:id="@+id/delete_record"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:src="@drawable/ic_delete" />
+</LinearLayout>
