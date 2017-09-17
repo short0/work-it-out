@@ -5,19 +5,34 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <EditText
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="duration" />
+
+    <TextView
         android:id="@+id/date"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="dd/mm/yyyy"
+        android:text="date"
         android:maxLength="10" />
 
-    <EditText
+    <TextView
         android:id="@+id/weight"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="      kg"
+        android:text="weight"
         android:maxLength="8" />
+
+    <TextView
+        android:id="@+id/body_parts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="body parts"
+        android:ellipsize="end" />
+
+
 
     <LinearLayout
         android:layout_width="0dp"
@@ -25,24 +40,6 @@
         android:layout_weight="1">
 
     </LinearLayout>
-
-    <ImageView
-        android:id="@+id/camera_link"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_camera" />
-
-    <ImageView
-        android:id="@+id/checkbox_link"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_directions" />
-
-    <ImageView
-        android:id="@+id/timepicker_link"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_schedule" />
 
     <ImageView
         android:id="@+id/delete_record"

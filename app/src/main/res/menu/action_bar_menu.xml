@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+
+    <item
+        android:id="@+id/action_calendar"
+        android:title="Calendar"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_graph"
+        android:title="Graph"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_body_fat_calculator"
+        android:title="Body Fat Calculator"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/action_statistics"
+        android:title="Statistics"
+        app:showAsAction="never" />
+
+</menu>
