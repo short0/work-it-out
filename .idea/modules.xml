@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/2017_lad_madproject.iml" filepath="$PROJECT_DIR$/2017_lad_madproject.iml" />
       <module fileurl="file://$PROJECT_DIR$/LAD.iml" filepath="$PROJECT_DIR$/LAD.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/workitout.iml" filepath="$PROJECT_DIR$/workitout.iml" />
     </modules>
   </component>
 </project>
