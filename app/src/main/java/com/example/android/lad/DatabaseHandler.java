@@ -73,7 +73,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     public ArrayList<ExerciseRecord> getAllRecords() {
         ArrayList<ExerciseRecord> recordList = new ArrayList<ExerciseRecord>();
         // Select All Query
-        String selectQuery = "SELECT * FROM " + TABLE_EXERCISES;
+        String selectQuery = "SELECT * FROM " + TABLE_EXERCISES + " ORDER BY ID DESC";
         SQLiteDatabase db = this.getWritableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
         // looping through all rows and adding to list
