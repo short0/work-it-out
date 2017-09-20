@@ -2,6 +2,7 @@ package com.example.android.lad;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.SearchManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,7 +13,6 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -20,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RecordDetailsActivity extends AppCompatActivity {
+public class RecordDetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView dateEditText;
     EditText weightEditText;
@@ -91,6 +91,20 @@ public class RecordDetailsActivity extends AppCompatActivity {
 
         }
 
+        ImageView searchShoulders = (ImageView) findViewById(R.id.search_shoulders);
+        searchShoulders.setOnClickListener(this);
+        ImageView searchBiceps = (ImageView) findViewById(R.id.search_biceps);
+        searchBiceps.setOnClickListener(this);
+        ImageView searchTriceps = (ImageView) findViewById(R.id.search_triceps);
+        searchTriceps.setOnClickListener(this);
+        ImageView searchLegs = (ImageView) findViewById(R.id.search_legs);
+        searchLegs.setOnClickListener(this);
+        ImageView searchChest = (ImageView) findViewById(R.id.search_chest);
+        searchChest.setOnClickListener(this);
+        ImageView searchBack = (ImageView) findViewById(R.id.search_back);
+        searchBack.setOnClickListener(this);
+        ImageView searchCardio = (ImageView) findViewById(R.id.search_cardio);
+        searchCardio.setOnClickListener(this);
 
         fabSave = (FloatingActionButton) findViewById(R.id.fab_save);
         fabSave.setOnClickListener(new View.OnClickListener() {
@@ -212,5 +226,49 @@ public class RecordDetailsActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.action_bar_menu, menu);
         return true;
     }
+
+    @Override
+    public void onClick(View view) {
+        Intent intent;
+        switch (view.getId())
+        {
+            case R.id.search_shoulders:
+                intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, "Shoulders exercises");
+                startActivity(intent);
+                break;
+            case R.id.search_biceps:
+                intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, "Biceps exercises");
+                startActivity(intent);
+                break;
+            case R.id.search_triceps:
+                intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, "Triceps exercises");
+                startActivity(intent);
+                break;
+            case R.id.search_legs:
+                intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, "Legs exercises");
+                startActivity(intent);
+                break;
+            case R.id.search_chest:
+                intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, "Chest exercises");
+                startActivity(intent);
+                break;
+            case R.id.search_back:
+                intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, "Back exercises");
+                startActivity(intent);
+                break;
+            case R.id.search_cardio:
+                intent = new Intent(Intent.ACTION_WEB_SEARCH);
+                intent.putExtra(SearchManager.QUERY, "Cardio exercises");
+                startActivity(intent);
+                break;
+        }
+    }
+
 
 }
