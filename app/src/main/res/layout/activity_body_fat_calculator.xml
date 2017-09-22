@@ -1,9 +1,117 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="com.example.android.lad.BodyFatCalculatorActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/bottom">
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottom"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tvGender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Gender:" />
+
+    <CheckBox
+        android:id="@+id/checkMale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="male"
+        android:visibility="visible" />
+
+    <CheckBox
+        android:id="@+id/checkFemale"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Female" />
+
+    <TextView
+        android:id="@+id/tvHeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Height(cm):" />
+
+    <EditText
+        android:id="@+id/etHeight"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberSigned" />
+
+    <TextView
+        android:id="@+id/tvNeck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Neck(cm):" />
+
+    <EditText
+        android:id="@+id/etNeck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberSigned" />
+
+    <TextView
+        android:id="@+id/tvWaist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Waist(cm):" />
+
+    <EditText
+        android:id="@+id/etWaist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberSigned" />
+
+    <TextView
+        android:id="@+id/tvHip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hip(cm)" />
+
+    <EditText
+        android:id="@+id/etHip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberSigned" />
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="0dp"
+        android:text="SAVE"
+        />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvBodyFat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom"
+        android:layout_alignParentStart="true"
+        android:gravity="center"
+        android:text="0.0%"
+        android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+        android:textColor="@android:color/black" />
+
+</RelativeLayout>
+
+
