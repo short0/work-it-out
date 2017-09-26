@@ -8,28 +8,32 @@ import java.io.Serializable;
 
 // An ExerciseRecord has information about an exercise activity
 // m stands for "member"
-public class ExerciseRecord implements Serializable{
+public class ExerciseRecord implements Serializable
+{
 
     int id;
     String mDuration;
     String mDate; // Date of exercise
     String mWeight; // Current weight on that date
     String mBodyParts;
+    String mBodyFatPercentage;
 
 
-    public ExerciseRecord(int id, String mDuration, String mDate, String mWeight, String mBodyParts) {
+    public ExerciseRecord(int id, String mDuration, String mDate, String mWeight, String mBodyParts, String mBodyFatPercentage) {
         this.id = id;
         this.mDuration = mDuration;
         this.mDate = mDate;
         this.mWeight = mWeight;
         this.mBodyParts = mBodyParts;
+        this.mBodyFatPercentage = mBodyFatPercentage;
     }
 
-    public ExerciseRecord(String mDuration, String mDate, String mWeight, String mBodyParts) {
+    public ExerciseRecord(String mDuration, String mDate, String mWeight, String mBodyParts, String mBodyFatPercentage) {
         this.mDuration = mDuration;
         this.mDate = mDate;
         this.mWeight = mWeight;
         this.mBodyParts = mBodyParts;
+        this.mBodyFatPercentage = mBodyFatPercentage;
     }
 
     public ExerciseRecord(){}
@@ -55,6 +59,7 @@ public class ExerciseRecord implements Serializable{
         return mWeight;
     }
     public String getmBodyParts() { return mBodyParts; }
+    public String getmBodyFatPercentage() { return mBodyFatPercentage; }
 
     public void setID(int id) { this.id = id; }
     public void setmDuration(String mDuration) { this.mDuration = mDuration; }
@@ -63,9 +68,5 @@ public class ExerciseRecord implements Serializable{
     }
     public void setmWeight(String mWeight) { this.mWeight = mWeight; }
     public void setmBodyParts(String mBodyParts) { this.mBodyParts = mBodyParts;}
-
-    public String toString()
-    {
-        return "" + id + mDuration + mDate + mWeight + mBodyParts;
-    }
+    public void setmBodyFatPercentage(String mBodyFatPercentage) { this.mBodyFatPercentage = mBodyFatPercentage; }
 }

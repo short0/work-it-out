@@ -12,7 +12,6 @@ import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Menu;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -22,9 +21,13 @@ import android.widget.Toast;
 
 public class RecordDetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
+    double bodyFatPercentage;
+    int id = -1;
+
     TextView dateEditText;
     EditText weightEditText;
     EditText durationEditText;
+    TextView bodyFatPercentageEditText;
     FloatingActionButton fabSave;
 
     CheckBox shoulders;
@@ -52,6 +55,8 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
 
         record = (ExerciseRecord) getIntent().getSerializableExtra("record");
 
+        id = record.getID();
+
         dateEditText = (TextView) findViewById(R.id.date_edit_text);
         dateEditText.setText(record.getmDate());
         dateEditText.setOnClickListener(new View.OnClickListener() {
@@ -59,6 +64,18 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
             public void onClick(View view) {
                 DialogFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
+
+        bodyFatPercentageEditText = (TextView) findViewById(R.id.body_fat_percentage_edit_text);
+        bodyFatPercentageEditText.setText(record.getmBodyFatPercentage());
+        bodyFatPercentageEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Body Fat Calculator", Toast.LENGTH_SHORT).show();
+                Intent bodyFatPercentageIntent = new Intent(RecordDetailsActivity.this, BodyFatCalculatorActivity.class);
+                bodyFatPercentageIntent.putExtra("record", record);
+                startActivity(bodyFatPercentageIntent);
             }
         });
 
@@ -113,7 +130,7 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(getApplicationContext(), "Saving", Toast.LENGTH_SHORT).show();
 
                 String bodyParts = "";
-                if (shoulders.isChecked()) bodyParts += ", Shoulder";
+                if (shoulders.isChecked()) bodyParts += ", Shoulders";
                 if (biceps.isChecked()) bodyParts += ", Biceps";
                 if (triceps.isChecked()) bodyParts += ", Triceps";
                 if (legs.isChecked()) bodyParts += ", Legs";
@@ -152,6 +169,14 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                 {
                     record.setmBodyParts("");
                 }
+
+                String checkNullBodyFatPercentage = bodyFatPercentageEditText.getText().toString();
+                if (checkNullBodyFatPercentage.isEmpty()){
+                    record.setmBodyFatPercentage("0.0");
+                } else {
+                    record.setmBodyFatPercentage(bodyFatPercentageEditText.getText().toString());
+                }
+
                 database.updateRecord(record);
             }
         });
@@ -220,12 +245,12 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
     }
 
     //This will show the toolbar menu
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
+//        return true;
+//    }
 
     @Override
     public void onClick(View view) {
@@ -270,5 +295,11 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (id != -1) {
+            database.getRecord(id);
+        }
+    }
 }

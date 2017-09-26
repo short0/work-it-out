@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
                 SimpleDateFormat dateFormater = new SimpleDateFormat("dd/MM/yyyy");
                 String dateToString = dateFormater.format(currentDate);
                 Log.d("Insert: ", "Inserting ..");
-                database.addRecord(new ExerciseRecord("0.0", dateToString, "0.0", "Body parts"));
+                database.addRecord(new ExerciseRecord("0.0", dateToString, "0.0", "Body parts", "0.0"));
                 Log.d("Insert: ", "" + exerciseRecords.size());
                 loadDatabase();
                 Log.d("Insert: ", "" + exerciseRecords.size());
@@ -232,5 +232,6 @@ public class MainActivity extends AppCompatActivity {
         loadDatabase();
         adapter.notifyDataSetChanged();
     }
+
 
 }
