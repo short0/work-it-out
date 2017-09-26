@@ -1,9 +1,14 @@
 package com.example.android.lad;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -33,6 +38,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //Allowing Strict mode policy for Nougat support
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
+
 //        getApplicationContext().deleteDatabase("exercisesManager");
         // Get Database
         database = new DatabaseHandler(getApplicationContext());
@@ -82,6 +91,11 @@ public class MainActivity extends AppCompatActivity {
         });
 
         fab = (FloatingActionButton) findViewById(R.id.fab_add);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            fab.setEnabled(false);
+            ActivityCompat.requestPermissions(this, new String[] { Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE }, 0);
+        }
+
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -95,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
                 SimpleDateFormat dateFormater = new SimpleDateFormat("dd/MM/yyyy");
                 String dateToString = dateFormater.format(currentDate);
                 Log.d("Insert: ", "Inserting ..");
-                database.addRecord(new ExerciseRecord("0.0", dateToString, "0.0", "Body parts", "0.0"));
+                database.addRecord(new ExerciseRecord("0.0", dateToString, "0.0", "Body parts"));
                 Log.d("Insert: ", "" + exerciseRecords.size());
                 loadDatabase();
                 Log.d("Insert: ", "" + exerciseRecords.size());
@@ -153,6 +167,17 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    //Automatic request permission for camera
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if (requestCode == 0) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                    && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+                fab.setEnabled(true);
+            }
+        }
     }
 
     @Override
@@ -232,6 +257,5 @@ public class MainActivity extends AppCompatActivity {
         loadDatabase();
         adapter.notifyDataSetChanged();
     }
-
 
 }

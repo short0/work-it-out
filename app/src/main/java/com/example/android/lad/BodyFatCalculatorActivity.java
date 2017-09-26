@@ -1,7 +1,7 @@
 package com.example.android.lad;
 
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -22,24 +22,11 @@ public class BodyFatCalculatorActivity extends AppCompatActivity {
     private CheckBox male;
     private CheckBox female;
 
-    ExerciseRecord record;
-    DatabaseHandler database;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_body_fat_calculator);
-
-        database = new DatabaseHandler(getApplicationContext());
-
-        record = (ExerciseRecord) getIntent().getSerializableExtra("record");
-
         saveBtn = (Button) findViewById(R.id.saveBtn);
-        if (record == null)
-        {
-            saveBtn.setText("Calculate");
-        }
-
         height = (EditText) findViewById(R.id.etHeight);
         neck = (EditText) findViewById(R.id.etNeck);
         waist = (EditText) findViewById(R.id.etWaist);
@@ -99,11 +86,6 @@ public class BodyFatCalculatorActivity extends AppCompatActivity {
                 else
                 {
                     Toast.makeText(getApplicationContext(),"Please enter all fields",Toast.LENGTH_SHORT).show();
-                }
-
-                if (record != null) {
-                    record.setmBodyFatPercentage("" + bodyFat);
-                    database.updateRecord(record);
                 }
             }
         });

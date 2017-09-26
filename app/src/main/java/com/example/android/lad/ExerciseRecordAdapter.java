@@ -84,10 +84,6 @@ public class ExerciseRecordAdapter extends ArrayAdapter<ExerciseRecord> {
 //         bodyPartsView.setText("aaaaaaa");
         bodyPartsView.setText(currentExerciseRecord.getmBodyParts());
 
-        TextView bodyFatPercentageView = (TextView) listItemView.findViewById(R.id.body_fat_percentage);
-
-        // Set the text on weight view
-        bodyFatPercentageView.setText("" + formatBodyFatPercentage(currentExerciseRecord.getmBodyFatPercentage()) + "%");
 
         // Find the delete_record using id
         ImageView deleteRecord = (ImageView) listItemView.findViewById(R.id.delete_record);
@@ -121,12 +117,6 @@ public class ExerciseRecordAdapter extends ArrayAdapter<ExerciseRecord> {
         double temp = Double.parseDouble(weight);
         DecimalFormat weightFormat = new DecimalFormat("0.0");
         return weightFormat.format(temp);
-    }
-
-    private String formatBodyFatPercentage(String bodyFatPercentage) {
-        double temp = Double.parseDouble(bodyFatPercentage);
-        DecimalFormat bodyFatPercentageFormat = new DecimalFormat("0.0");
-        return bodyFatPercentageFormat.format(temp);
     }
 
     private int getDurationColor(String duration) {
