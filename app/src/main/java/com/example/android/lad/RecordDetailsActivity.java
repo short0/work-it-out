@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -300,7 +301,8 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
         bmOptions.inPurgeable = true;
 
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
-        imageView.setImageBitmap(bitmap);
+        Bitmap rotatedBitmap = rotateBitmap(bitmap);
+        imageView.setImageBitmap(rotatedBitmap);
     }
 
 @Override
@@ -312,13 +314,18 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
             Toast.makeText(getApplicationContext(), "Done! ", Toast.LENGTH_LONG).show();
 
         } else if (requestCode == 2) {
-
+            File imageFile;
             try {
                 Uri selectedImage = data.getData();
+                mCurrentPhotoPath = getRealPathFromURI(selectedImage);
+
                 Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+
+
                 saveImage(bmp);
                     /*Bitmap bit = BitmapFactory.decodeStream(imageStream);*/
-                imageView.setImageBitmap(bmp);
+                Bitmap rotatedBitmapGallery = rotateBitmap(bmp);
+                imageView.setImageBitmap(rotatedBitmapGallery);
                 Toast.makeText(getApplicationContext(), "Done! ", Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();
@@ -328,13 +335,19 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
     }
 }
 
-
-
-
-
-
-
-
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
 
     @Override
     public void onClick(View view) {
@@ -406,5 +419,56 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
             e1.printStackTrace();
         }
         return "";
+    }
+
+    public  Bitmap rotateBitmap(Bitmap bitmap) {
+        ExifInterface exifInterface = null;
+        try{
+            exifInterface = new ExifInterface(mCurrentPhotoPath);
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+        int orientation1 = exifInterface.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_UNDEFINED);
+
+        Matrix matrix = new Matrix();
+        switch (orientation1) {
+            case ExifInterface.ORIENTATION_NORMAL:
+                return bitmap;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.setScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.setRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.setRotate(180);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.setRotate(90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.setRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.setRotate(-90);
+                matrix.postScale(-1, 1);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.setRotate(-90);
+                break;
+            default:
+                return bitmap;
+        }
+        try {
+            Bitmap bmRotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bitmap.recycle();
+            return bmRotated;
+        }
+        catch (OutOfMemoryError e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
