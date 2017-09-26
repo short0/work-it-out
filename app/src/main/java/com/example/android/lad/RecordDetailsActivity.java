@@ -1,17 +1,30 @@
 package com.example.android.lad;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.SearchManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -19,15 +32,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class RecordDetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
-    double bodyFatPercentage;
-    int id = -1;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URI;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+import static android.R.attr.bitmap;
+import static android.os.Environment.getExternalStoragePublicDirectory;
+import static android.provider.MediaStore.*;
+
+public class RecordDetailsActivity extends AppCompatActivity implements View.OnClickListener{
 
     TextView dateEditText;
     EditText weightEditText;
     EditText durationEditText;
-    TextView bodyFatPercentageEditText;
     FloatingActionButton fabSave;
 
     CheckBox shoulders;
@@ -45,6 +72,10 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
     ImageView imageView;
     Integer REQUEST_CAMERA=1, SELECT_FILE=0;
 
+    private FloatingActionButton fab;
+    private Uri file;
+
+    String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,8 +86,6 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
 
         record = (ExerciseRecord) getIntent().getSerializableExtra("record");
 
-        id = record.getID();
-
         dateEditText = (TextView) findViewById(R.id.date_edit_text);
         dateEditText.setText(record.getmDate());
         dateEditText.setOnClickListener(new View.OnClickListener() {
@@ -64,18 +93,6 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
             public void onClick(View view) {
                 DialogFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "datePicker");
-            }
-        });
-
-        bodyFatPercentageEditText = (TextView) findViewById(R.id.body_fat_percentage_edit_text);
-        bodyFatPercentageEditText.setText(record.getmBodyFatPercentage());
-        bodyFatPercentageEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Body Fat Calculator", Toast.LENGTH_SHORT).show();
-                Intent bodyFatPercentageIntent = new Intent(RecordDetailsActivity.this, BodyFatCalculatorActivity.class);
-                bodyFatPercentageIntent.putExtra("record", record);
-                startActivity(bodyFatPercentageIntent);
             }
         });
 
@@ -130,7 +147,7 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(getApplicationContext(), "Saving", Toast.LENGTH_SHORT).show();
 
                 String bodyParts = "";
-                if (shoulders.isChecked()) bodyParts += ", Shoulders";
+                if (shoulders.isChecked()) bodyParts += ", Shoulder";
                 if (biceps.isChecked()) bodyParts += ", Biceps";
                 if (triceps.isChecked()) bodyParts += ", Triceps";
                 if (legs.isChecked()) bodyParts += ", Legs";
@@ -169,14 +186,6 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                 {
                     record.setmBodyParts("");
                 }
-
-                String checkNullBodyFatPercentage = bodyFatPercentageEditText.getText().toString();
-                if (checkNullBodyFatPercentage.isEmpty()){
-                    record.setmBodyFatPercentage("0.0");
-                } else {
-                    record.setmBodyFatPercentage(bodyFatPercentageEditText.getText().toString());
-                }
-
                 database.updateRecord(record);
             }
         });
@@ -185,72 +194,147 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
         //FOR CAMERA
 
         imageView = (ImageView) findViewById(R.id.image_view);
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_take_picture);
+        fab = (FloatingActionButton) findViewById(R.id.fab_take_picture);
+
         fab.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view){
-                SelectImage();
+
+                selectImage();
             }
         });
     }
 
-    private void SelectImage(){
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/WorkItOut");
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
 
-        final CharSequence[] items={"Camera","Gallery", "Cancel"};
+        // Save a file: path for use with ACTION_VIEW intents
+        mCurrentPhotoPath = image.getAbsolutePath();
+        Log.d("mylog", "Path: " + mCurrentPhotoPath);
+        return image;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        // Ensure that there's a camera activity to handle the intent
+        File photoFile = null;
+        try {
+            photoFile = createImageFile();
+        } catch (IOException ex) {
+            // Error occurred while creating the File
+            Log.d("mylog", "Exception while creating file: " + ex.toString());
+        }
+        // Continue only if the File was successfully created
+        if (photoFile != null) {
+            Log.d("mylog", "Photofile not null");
+            Uri photoURI = FileProvider.getUriForFile(RecordDetailsActivity.this,
+                    "com.example.provider.FileProvider",
+                    photoFile);
+            takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+            startActivityForResult(takePictureIntent, REQUEST_CAMERA);
+        }
+    }
+
+    public void selectImage()
+    {
+
+        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(RecordDetailsActivity.this);
-        builder.setTitle("Add Image");
-
-        builder.setItems(items, new DialogInterface.OnClickListener() {
+        builder.setTitle("Add Photo!");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
 
             @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                if (items[i].equals("Camera")) {
+            public void onClick(DialogInterface dialog, int item) {
+                if (options[item].equals("Take Photo")) {
+                    dispatchTakePictureIntent();
+                    galleryAddPic();
 
-                    Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(intent, REQUEST_CAMERA);
+                } else if (options[item].equals("Choose from Gallery")) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
-                } else if (items[i].equals("Gallery")) {
+                    startActivityForResult(intent, 2);
 
-                    Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("image/*");
-                    startActivityForResult(intent, SELECT_FILE);
-
-                } else if (items[i].equals("Cancel")) {
-                    dialogInterface.dismiss();
+                } else if (options[item].equals("Cancel")) {
+                    dialog.dismiss();
                 }
             }
         });
         builder.show();
-
     }
 
-    @Override
-    public  void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode, resultCode,data);
+    private void galleryAddPic() {
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(mCurrentPhotoPath);
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        this.sendBroadcast(mediaScanIntent);
+    }
 
-        if(resultCode== Activity.RESULT_OK){
+    private void setPic() {
+        // Get the dimensions of the View
+        int targetW = imageView.getWidth();
+        int targetH = imageView.getHeight();
 
-            if(requestCode==REQUEST_CAMERA){
-                Bundle bundle = data.getExtras();
-                final Bitmap bmp = (Bitmap) bundle.get("data");
+        // Get the dimensions of the bitmap
+        BitmapFactory.Options bmOptions = new BitmapFactory.Options();
+        bmOptions.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        int photoW = bmOptions.outWidth;
+        int photoH = bmOptions.outHeight;
+
+        // Determine how much to scale down the image
+        int scaleFactor = Math.min(photoW/targetW, photoH/targetH);
+
+        // Decode the image file into a Bitmap sized to fill the View
+        bmOptions.inJustDecodeBounds = false;
+        bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inPurgeable = true;
+
+        Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
+        imageView.setImageBitmap(bitmap);
+    }
+
+@Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+    super.onActivityResult(requestCode, resultCode, data);
+    if (resultCode == Activity.RESULT_OK) {
+        if (requestCode == 1) {
+            setPic();
+            Toast.makeText(getApplicationContext(), "Done! ", Toast.LENGTH_LONG).show();
+
+        } else if (requestCode == 2) {
+
+            try {
+                Uri selectedImage = data.getData();
+                Bitmap bmp = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                saveImage(bmp);
+                    /*Bitmap bit = BitmapFactory.decodeStream(imageStream);*/
                 imageView.setImageBitmap(bmp);
-
-            }else if(requestCode==SELECT_FILE){
-
-                Uri selectedImageUri = data.getData();
-                imageView.setImageURI(selectedImageUri);
+                Toast.makeText(getApplicationContext(), "Done! ", Toast.LENGTH_LONG).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+                Toast.makeText(RecordDetailsActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();
             }
         }
     }
+}
 
-    //This will show the toolbar menu
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.action_bar_menu, menu);
-//        return true;
-//    }
+
+
+
+
+
+
+
 
     @Override
     public void onClick(View view) {
@@ -295,11 +379,32 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        if (id != -1) {
-            database.getRecord(id);
+    public String saveImage(Bitmap myBitmap) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + "/WorkItOut");
+
+        // have the object build the directory structure, if needed.
+        if (!wallpaperDirectory.exists()) {
+            wallpaperDirectory.mkdirs();
         }
+
+        try {
+            File f = new File(wallpaperDirectory, Calendar.getInstance()
+                    .getTimeInMillis() + ".jpg");
+            f.createNewFile();
+            FileOutputStream fo = new FileOutputStream(f);
+            fo.write(bytes.toByteArray());
+            MediaScannerConnection.scanFile(this,
+                    new String[]{f.getPath()},
+                    new String[]{"image/jpeg"}, null);
+            fo.close();
+            Log.d("TAG", "File Saved::--->" + f.getAbsolutePath());
+
+            return f.getAbsolutePath();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+        return "";
     }
 }

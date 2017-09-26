@@ -50,33 +50,18 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <TextView
+        android:id="@+id/body_parts"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_height="match_parent"
+        android:paddingLeft="16dp"
+        android:gravity="center_vertical"
         android:layout_weight="2"
-        android:orientation="vertical">
+        android:ellipsize="end"
+        android:fontFamily="sans-serif-medium"
+        android:maxLines="2"
+        android:text="body parts" />
 
-        <TextView
-            android:id="@+id/body_parts"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:ellipsize="end"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center_vertical"
-            android:maxLines="1"
-            android:text="body parts" />
-
-        <TextView
-            android:id="@+id/body_fat_percentage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="sans-serif-medium"
-            android:gravity="center_vertical"
-            android:text="Body fat: 10%" />
-    </LinearLayout>
 
     <ImageView
         android:id="@+id/delete_record"
@@ -84,5 +69,4 @@
         android:layout_height="32dp"
         android:layout_gravity="center_vertical"
         android:src="@drawable/ic_delete" />
-
 </LinearLayout>
