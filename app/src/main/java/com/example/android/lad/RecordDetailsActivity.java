@@ -210,17 +210,18 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
 
         imageView = (ImageView) findViewById(R.id.image_view);
 
-        File imgFile = new  File(record.getmPhotoPath());
+        if ((record.getmPhotoPath() != null) && (record.getmPhotoPath() != "")) {
+            File imgFile = new File(record.getmPhotoPath());
 
-        if(imgFile.exists()){
-            mCurrentPhotoPath = record.getmPhotoPath();
-            Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
-            Bitmap temp = rotateBitmap(myBitmap);
-            if (temp != null) {
-                imageView.setImageBitmap(temp);
+            if (imgFile.exists()) {
+                mCurrentPhotoPath = record.getmPhotoPath();
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                Bitmap temp = rotateBitmap(myBitmap);
+                if (temp != null) {
+                    imageView.setImageBitmap(temp);
+                }
             }
         }
-
         fab = (FloatingActionButton) findViewById(R.id.fab_take_picture);
 
         fab.setOnClickListener(new View.OnClickListener(){
