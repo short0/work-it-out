@@ -1,5 +1,6 @@
 package com.example.android.lad;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -21,6 +22,7 @@ public class BodyFatCalculatorActivity extends AppCompatActivity {
     private double bodyFat;
     private CheckBox male;
     private CheckBox female;
+
 
     ExerciseRecord record;
     DatabaseHandler database;
@@ -82,6 +84,17 @@ public class BodyFatCalculatorActivity extends AppCompatActivity {
                         bodyFat = (double) Math.round(bodyFat * 10d) / 10d;
                         tvBodyFat.setText(Double.toString(bodyFat) + "%");
 
+                        if (record != null) {
+                            record.setmBodyFatPercentage("" + bodyFat);
+                            database.updateRecord(record);
+                            Toast.makeText(getApplicationContext(),"Saved",Toast.LENGTH_SHORT).show();
+                            Intent detailsIntent = new Intent(BodyFatCalculatorActivity.this, RecordDetailsActivity.class);
+
+                            detailsIntent.putExtra("record", record);
+
+                            startActivity(detailsIntent);
+                        }
+
                     } else if (female.isChecked())
                     {
                         bodyFat = calcBodyFatFemale(Double.parseDouble(waist.getText().toString()), Double.parseDouble(hip.getText().toString())
@@ -89,6 +102,16 @@ public class BodyFatCalculatorActivity extends AppCompatActivity {
                         bodyFat = (double) Math.round(bodyFat * 10d) / 10d;
                         tvBodyFat.setText(Double.toString(bodyFat) + "%");
 
+                        if (record != null) {
+                            record.setmBodyFatPercentage("" + bodyFat);
+                            database.updateRecord(record);
+                            Toast.makeText(getApplicationContext(),"Saved",Toast.LENGTH_SHORT).show();
+                            Intent detailsIntent = new Intent(BodyFatCalculatorActivity.this, RecordDetailsActivity.class);
+
+                            detailsIntent.putExtra("record", record);
+
+                            startActivity(detailsIntent);
+                        }
 
                     }
                     else
@@ -101,10 +124,7 @@ public class BodyFatCalculatorActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(),"Please enter all fields",Toast.LENGTH_SHORT).show();
                 }
 
-                if (record != null) {
-                    record.setmBodyFatPercentage("" + bodyFat);
-                    database.updateRecord(record);
-                }
+
             }
         });
 
