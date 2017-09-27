@@ -27,6 +27,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     private static final String KEY_WEIGHT = "weight";
     private static final String KEY_BODY_PARTS = "bodyparts";
     private static final String KEY_BODY_FAT_PERCENTAGE = "bodyfatpercentage";
+    private static final String KEY_PHOTO_PATH = "photopath";
     public DatabaseHandler(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
@@ -39,7 +40,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_DATE + " TEXT,"
                 + KEY_WEIGHT + " TEXT,"
                 + KEY_BODY_PARTS + " TEXT,"
-                + KEY_BODY_FAT_PERCENTAGE + " TEXT"
+                + KEY_BODY_FAT_PERCENTAGE + " TEXT,"
+                + KEY_PHOTO_PATH + " TEXT"
                 + ")";
         db.execSQL(CREATE_EXERCISES_TABLE);
     }
@@ -60,6 +62,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_WEIGHT, record.getmWeight()); // Contact Phone
         values.put(KEY_BODY_PARTS, record.getmBodyParts());
         values.put(KEY_BODY_FAT_PERCENTAGE, record.getmBodyFatPercentage());
+        values.put(KEY_PHOTO_PATH, record.getmPhotoPath());
         // Inserting Row
         db.insert(TABLE_EXERCISES, null, values);
         //2nd argument is String containing nullColumnHack
@@ -69,12 +72,12 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     ExerciseRecord getRecord(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(TABLE_EXERCISES, new String[] { KEY_ID,
-                        KEY_DURATION, KEY_DATE, KEY_WEIGHT, KEY_BODY_PARTS, KEY_BODY_FAT_PERCENTAGE}, KEY_ID + "=?",
+                        KEY_DURATION, KEY_DATE, KEY_WEIGHT, KEY_BODY_PARTS, KEY_BODY_FAT_PERCENTAGE, KEY_PHOTO_PATH}, KEY_ID + "=?",
                 new String[] { String.valueOf(id) }, null, null, null, null);
         if (cursor != null)
             cursor.moveToFirst();
         ExerciseRecord record = new ExerciseRecord(Integer.parseInt(cursor.getString(0)),
-                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5));
+                cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getString(5), cursor.getString(6));
         // return student
         return record;
     }
@@ -95,6 +98,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 record.setmWeight(cursor.getString(3));
                 record.setmBodyParts(cursor.getString(4));
                 record.setmBodyFatPercentage(cursor.getString(5));
+                record.setmPhotoPath(cursor.getString(6));
                 // Adding student to list
                 recordList.add(record);
             } while (cursor.moveToNext());
@@ -142,6 +146,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         values.put(KEY_WEIGHT, record.getmWeight());
         values.put(KEY_BODY_PARTS, record.getmBodyParts());
         values.put(KEY_BODY_FAT_PERCENTAGE, record.getmBodyFatPercentage());
+        values.put(KEY_PHOTO_PATH, record.getmPhotoPath());
         // updating row
         return db.update(TABLE_EXERCISES, values, KEY_ID + " = ?",
                 new String[] { String.valueOf(record.getID()) });

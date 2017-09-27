@@ -17,23 +17,26 @@ public class ExerciseRecord implements Serializable
     String mWeight; // Current weight on that date
     String mBodyParts;
     String mBodyFatPercentage;
+    String mPhotoPath;
 
 
-    public ExerciseRecord(int id, String mDuration, String mDate, String mWeight, String mBodyParts, String mBodyFatPercentage) {
+    public ExerciseRecord(int id, String mDuration, String mDate, String mWeight, String mBodyParts, String mBodyFatPercentage, String mPhotoPath) {
         this.id = id;
         this.mDuration = mDuration;
         this.mDate = mDate;
         this.mWeight = mWeight;
         this.mBodyParts = mBodyParts;
         this.mBodyFatPercentage = mBodyFatPercentage;
+        this.mPhotoPath = mPhotoPath;
     }
 
-    public ExerciseRecord(String mDuration, String mDate, String mWeight, String mBodyParts, String mBodyFatPercentage) {
+    public ExerciseRecord(String mDuration, String mDate, String mWeight, String mBodyParts, String mBodyFatPercentage, String mPhotoPath) {
         this.mDuration = mDuration;
         this.mDate = mDate;
         this.mWeight = mWeight;
         this.mBodyParts = mBodyParts;
         this.mBodyFatPercentage = mBodyFatPercentage;
+        this.mPhotoPath = mPhotoPath;
     }
 
     public ExerciseRecord(){}
@@ -60,6 +63,7 @@ public class ExerciseRecord implements Serializable
     }
     public String getmBodyParts() { return mBodyParts; }
     public String getmBodyFatPercentage() { return mBodyFatPercentage; }
+    public String getmPhotoPath(){ return mPhotoPath; }
 
     public void setID(int id) { this.id = id; }
     public void setmDuration(String mDuration) { this.mDuration = mDuration; }
@@ -69,4 +73,5 @@ public class ExerciseRecord implements Serializable
     public void setmWeight(String mWeight) { this.mWeight = mWeight; }
     public void setmBodyParts(String mBodyParts) { this.mBodyParts = mBodyParts;}
     public void setmBodyFatPercentage(String mBodyFatPercentage) { this.mBodyFatPercentage = mBodyFatPercentage; }
+    public void setmPhotoPath(String mPhotoPath) { this.mPhotoPath = mPhotoPath; }
 }
