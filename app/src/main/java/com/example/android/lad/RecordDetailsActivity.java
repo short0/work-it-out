@@ -197,6 +197,10 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                     record.setmBodyFatPercentage(bodyFatPercentageEditText.getText().toString());
                 }
 
+                Log.d("Photopath", "" + mCurrentPhotoPath);
+                record.setmPhotoPath(mCurrentPhotoPath);
+                Log.d("Photopath", "" + mCurrentPhotoPath);
+
                 database.updateRecord(record);
             }
         });
@@ -205,6 +209,19 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
         //FOR CAMERA
 
         imageView = (ImageView) findViewById(R.id.image_view);
+
+        if ((record.getmPhotoPath() != null) && (record.getmPhotoPath() != "")) {
+            File imgFile = new File(record.getmPhotoPath());
+
+            if (imgFile.exists()) {
+                mCurrentPhotoPath = record.getmPhotoPath();
+                Bitmap myBitmap = BitmapFactory.decodeFile(imgFile.getAbsolutePath());
+                Bitmap temp = rotateBitmap(myBitmap);
+                if (temp != null) {
+                    imageView.setImageBitmap(temp);
+                }
+            }
+        }
         fab = (FloatingActionButton) findViewById(R.id.fab_take_picture);
 
         fab.setOnClickListener(new View.OnClickListener(){
