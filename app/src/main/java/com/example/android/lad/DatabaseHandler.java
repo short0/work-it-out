@@ -33,7 +33,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
     // Creating Table
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String CREATE_STUDENTS_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "("
+        String CREATE_EXERCISES_TABLE = "CREATE TABLE " + TABLE_EXERCISES + "("
                 + KEY_ID + " INTEGER PRIMARY KEY,"
                 + KEY_DURATION + " TEXT,"
                 + KEY_DATE + " TEXT,"
@@ -41,7 +41,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_BODY_PARTS + " TEXT,"
                 + KEY_BODY_FAT_PERCENTAGE + " TEXT"
                 + ")";
-        db.execSQL(CREATE_STUDENTS_TABLE);
+        db.execSQL(CREATE_EXERCISES_TABLE);
     }
     // Upgrading database
     @Override
