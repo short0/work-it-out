@@ -1,14 +1,17 @@
 package com.example.android.lad;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -82,7 +85,7 @@ public class MainActivity extends AppCompatActivity {
         recordsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Details of record", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Record Details", Toast.LENGTH_SHORT).show();
 
                 ExerciseRecord r = exerciseRecords.get(position);
 
@@ -103,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Adding record", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "New Record Added", Toast.LENGTH_SHORT).show();
 //                exerciseRecords.add(new ExerciseRecord("0.0h", "dd/mm/yyyy", "0.0kg", ""));
 //                Log.d("Insert: ", "" + exerciseRecords.size());
 
@@ -220,6 +223,34 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Statistics", Toast.LENGTH_SHORT).show();
                 Intent intent_statistics = new Intent(MainActivity.this, StatisticsActivity.class);
                 startActivity(intent_statistics);
+                return true;
+
+            case R.id.action_delete_all:
+
+                AlertDialog.Builder builder;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    builder = new AlertDialog.Builder(this, android.R.style.Theme_DeviceDefault_Dialog_Alert);
+                } else {
+                    builder = new AlertDialog.Builder(this);
+                }
+                builder.setTitle("Delete entry")
+                        .setMessage("Are you sure you want to delete all the records?")
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // continue with delete
+                                deleteAllRecords();
+
+                                Intent back_to_main = new Intent(MainActivity.this, MainActivity.class);
+                                startActivity(back_to_main);
+                            }
+                        })
+                        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                // do nothing
+                            }
+                        })
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .show();
                 return true;
 
             default:

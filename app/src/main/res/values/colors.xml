@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimaryDark">#5b5b5b</color>
+    <color name="colorAccent">#000000</color>
 
 
 
-    <color name="duration1">#4A7BA7</color>
+    <color name="duration1">#319dff</color>
     <color name="duration2">#04B4B3</color>
     <color name="duration3">#10CAC9</color>
     <color name="duration4">#F5A623</color>

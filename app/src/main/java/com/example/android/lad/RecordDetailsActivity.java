@@ -12,6 +12,7 @@ import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -147,7 +148,7 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
         fabSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Saving", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Record Saved", Toast.LENGTH_SHORT).show();
 
                 String bodyParts = "";
                 if (shoulders.isChecked()) bodyParts += ", Shoulders";
@@ -202,6 +203,8 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                 Log.d("Photopath", "" + mCurrentPhotoPath);
 
                 database.updateRecord(record);
+                Intent return_home = new Intent(RecordDetailsActivity.this, MainActivity.class);
+                startActivity(return_home);
             }
         });
 
@@ -263,9 +266,14 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
         // Continue only if the File was successfully created
         if (photoFile != null) {
             Log.d("mylog", "Photofile not null");
-            Uri photoURI = FileProvider.getUriForFile(RecordDetailsActivity.this,
-                    "com.example.provider.FileProvider",
-                    photoFile);
+            Uri photoURI;
+            if(Build.VERSION_CODES.N <= Build.VERSION.SDK_INT) {
+                photoURI = FileProvider.getUriForFile(RecordDetailsActivity.this,
+                        "com.example.provider.FileProvider",
+                        photoFile);
+            }else {
+                photoURI = Uri.fromFile(photoFile);
+            }
             takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
             startActivityForResult(takePictureIntent, REQUEST_CAMERA);
         }
@@ -274,15 +282,15 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
     public void selectImage()
     {
 
-        final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
+        final CharSequence[] options = {"Use Camera", "Choose from Gallery", "Cancel"};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(RecordDetailsActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Add Photo");
         builder.setItems(options, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo")) {
+                if (options[item].equals("Use Camera")) {
                     dispatchTakePictureIntent();
                     galleryAddPic();
 
@@ -338,7 +346,7 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
     if (resultCode == Activity.RESULT_OK) {
         if (requestCode == 1) {
             setPic();
-            Toast.makeText(getApplicationContext(), "Done! ", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), "Photo Saved ", Toast.LENGTH_LONG).show();
 
         } else if (requestCode == 2) {
             File imageFile;
@@ -353,7 +361,7 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                     /*Bitmap bit = BitmapFactory.decodeStream(imageStream);*/
                 Bitmap rotatedBitmapGallery = rotateBitmap(bmp);
                 imageView.setImageBitmap(rotatedBitmapGallery);
-                Toast.makeText(getApplicationContext(), "Done! ", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Photo Saved! ", Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 e.printStackTrace();
                 Toast.makeText(RecordDetailsActivity.this, "Something went wrong", Toast.LENGTH_LONG).show();

@@ -23,4 +23,15 @@
         android:title="Statistics"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/line"
+        android:checkable="false"
+        android:enabled="false"
+        android:title="--------------------------------" />
+
+    <item
+        android:id="@+id/action_delete_all"
+        android:checkable="false"
+        android:title="DELETE ALL RECORDS" />
+
 </menu>
