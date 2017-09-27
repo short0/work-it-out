@@ -42,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
+/**
+ * In the first run, uncomment the next line to delete the old database
+ * Then comment it again so that the database will not be deleted in subsequent runs
+ */
 //        getApplicationContext().deleteDatabase("exercisesManager");
         // Get Database
         database = new DatabaseHandler(getApplicationContext());
@@ -109,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                 SimpleDateFormat dateFormater = new SimpleDateFormat("dd/MM/yyyy");
                 String dateToString = dateFormater.format(currentDate);
                 Log.d("Insert: ", "Inserting ..");
-                database.addRecord(new ExerciseRecord("0.0", dateToString, "0.0", "Body parts"));
+                database.addRecord(new ExerciseRecord("0.0", dateToString, "0.0", "Body parts", "0.0"));
                 Log.d("Insert: ", "" + exerciseRecords.size());
                 loadDatabase();
                 Log.d("Insert: ", "" + exerciseRecords.size());

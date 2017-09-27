@@ -1,13 +1,10 @@
 package com.example.android.lad;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.SearchManager;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -19,13 +16,10 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -33,29 +27,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URI;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-import static android.R.attr.bitmap;
-import static android.os.Environment.getExternalStoragePublicDirectory;
-import static android.provider.MediaStore.*;
-
 public class RecordDetailsActivity extends AppCompatActivity implements View.OnClickListener{
+
+    double bodyFatPercentage;
+    int id = -1;
 
     TextView dateEditText;
     EditText weightEditText;
     EditText durationEditText;
+    TextView bodyFatPercentageEditText;
     FloatingActionButton fabSave;
 
     CheckBox shoulders;
@@ -87,6 +75,8 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
 
         record = (ExerciseRecord) getIntent().getSerializableExtra("record");
 
+        id = record.getID();
+
         dateEditText = (TextView) findViewById(R.id.date_edit_text);
         dateEditText.setText(record.getmDate());
         dateEditText.setOnClickListener(new View.OnClickListener() {
@@ -94,6 +84,18 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
             public void onClick(View view) {
                 DialogFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "datePicker");
+            }
+        });
+
+        bodyFatPercentageEditText = (TextView) findViewById(R.id.body_fat_percentage_edit_text);
+        bodyFatPercentageEditText.setText(record.getmBodyFatPercentage());
+        bodyFatPercentageEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getApplicationContext(), "Body Fat Calculator", Toast.LENGTH_SHORT).show();
+                Intent bodyFatPercentageIntent = new Intent(RecordDetailsActivity.this, BodyFatCalculatorActivity.class);
+                bodyFatPercentageIntent.putExtra("record", record);
+                startActivity(bodyFatPercentageIntent);
             }
         });
 
@@ -148,7 +150,7 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                 Toast.makeText(getApplicationContext(), "Saving", Toast.LENGTH_SHORT).show();
 
                 String bodyParts = "";
-                if (shoulders.isChecked()) bodyParts += ", Shoulder";
+                if (shoulders.isChecked()) bodyParts += ", Shoulders";
                 if (biceps.isChecked()) bodyParts += ", Biceps";
                 if (triceps.isChecked()) bodyParts += ", Triceps";
                 if (legs.isChecked()) bodyParts += ", Legs";
@@ -187,6 +189,14 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                 {
                     record.setmBodyParts("");
                 }
+
+                String checkNullBodyFatPercentage = bodyFatPercentageEditText.getText().toString();
+                if (checkNullBodyFatPercentage.isEmpty()){
+                    record.setmBodyFatPercentage("0.0");
+                } else {
+                    record.setmBodyFatPercentage(bodyFatPercentageEditText.getText().toString());
+                }
+
                 database.updateRecord(record);
             }
         });
@@ -389,6 +399,18 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
                 intent.putExtra(SearchManager.QUERY, "Cardio exercises");
                 startActivity(intent);
                 break;
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (id != -1) {
+            record = database.getRecord(id);
+            if (Double.parseDouble(record.getmBodyFatPercentage()) > 0)
+            {
+                bodyFatPercentageEditText.setText(record.getmBodyFatPercentage());
+            }
         }
     }
 
