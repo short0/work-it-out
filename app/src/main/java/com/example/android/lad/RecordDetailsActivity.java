@@ -240,7 +240,13 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = new File(Environment.getExternalStorageDirectory() + "/WorkItOut");
+
+        File storageDir = new File(Environment.getExternalStorageDirectory() + "/Work It Out");
+
+        if(!storageDir.exists()){
+            storageDir.mkdir();
+        }
+
         File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
@@ -338,6 +344,7 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
         Bitmap bitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, bmOptions);
         Bitmap rotatedBitmap = rotateBitmap(bitmap);
         imageView.setImageBitmap(rotatedBitmap);
+
     }
 
 @Override
@@ -442,7 +449,7 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
     public String saveImage(Bitmap myBitmap) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
         myBitmap.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
-        File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + "/WorkItOut");
+        File wallpaperDirectory = new File(Environment.getExternalStorageDirectory() + "/Work It Out");
 
         // have the object build the directory structure, if needed.
         if (!wallpaperDirectory.exists()) {
