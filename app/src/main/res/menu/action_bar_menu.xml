@@ -5,22 +5,22 @@
 
     <item
         android:id="@+id/action_calendar"
-        android:title="Calendar"
+        android:title="@string/menu_calendar"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_graph"
-        android:title="Graph"
+        android:title="@string/menu_graph"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_body_fat_calculator"
-        android:title="Body Fat Calculator"
+        android:title="@string/menu_body_fat_calculator"
         app:showAsAction="never" />
 
     <item
         android:id="@+id/action_statistics"
-        android:title="Statistics"
+        android:title="@string/menu_statistics"
         app:showAsAction="never" />
 
     <item
@@ -32,6 +32,6 @@
     <item
         android:id="@+id/action_delete_all"
         android:checkable="false"
-        android:title="DELETE ALL RECORDS" />
+        android:title="@string/menu_delete_all_records" />
 
 </menu>

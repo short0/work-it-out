@@ -59,7 +59,7 @@ public class StatisticsActivity extends AppCompatActivity {
             weightLossView.setText("" + calculateWeightLoss(beforeRecord, afterRecord));
 
             bodyFatChangeView = (TextView) findViewById(R.id.body_fat_change_view);
-            bodyFatChangeView.setText("" + calculateBodyFatChange(beforeRecord, afterRecord));
+            bodyFatChangeView.setText("" + calculateBodyFatChange(beforeRecord, afterRecord) + "%");
         }
     }
 
@@ -147,7 +147,7 @@ public class StatisticsActivity extends AppCompatActivity {
         double beforeWeight = Double.parseDouble(before.getmWeight());
         double afterWeight = Double.parseDouble(after.getmWeight());
 
-        return afterWeight - beforeWeight;
+        return -(afterWeight - beforeWeight);
     }
 
     public double calculateBodyFatChange(ExerciseRecord before, ExerciseRecord after)

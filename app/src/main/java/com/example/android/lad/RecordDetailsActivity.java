@@ -288,24 +288,24 @@ public class RecordDetailsActivity extends AppCompatActivity implements View.OnC
     public void selectImage()
     {
 
-        final CharSequence[] options = {"Use Camera", "Choose from Gallery", "Cancel"};
+        final CharSequence[] options = {getString(R.string.use_camera_string), getString(R.string.choose_from_galery_string), getString(R.string.cancel_string)};
 
         AlertDialog.Builder builder = new AlertDialog.Builder(RecordDetailsActivity.this);
-        builder.setTitle("Add Photo");
+        builder.setTitle(getString(R.string.add_photo_string));
         builder.setItems(options, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Use Camera")) {
+                if (options[item].equals(getString(R.string.use_camera_string))) {
                     dispatchTakePictureIntent();
                     galleryAddPic();
 
-                } else if (options[item].equals("Choose from Gallery")) {
+                } else if (options[item].equals(getString(R.string.choose_from_galery_string))) {
                     Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 
                     startActivityForResult(intent, 2);
 
-                } else if (options[item].equals("Cancel")) {
+                } else if (options[item].equals(getString(R.string.cancel_string))) {
                     dialog.dismiss();
                 }
             }

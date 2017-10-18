@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Work It Out</string>
+    <string name="menu_body_fat_calculator">Calculadora de grasa corporal</string>
+    <string name="menu_calendar">Calendario</string>
+    <string name="menu_delete_all_records">ELIMINAR TODOS LOS REGISTROS</string>
+    <string name="menu_graph">Grafico</string>
+    <string name="menu_statistics">Estadística</string>
+    <string name="back_string">Espalda</string>
+    <string name="biceps_string">Bíceps</string>
+    <string name="body_fat_string">Grasa corporal %</string>
+    <string name="cardio_string">Cardio</string>
+    <string name="chest_string">Pecho</string>
+    <string name="date_string">Fecha</string>
+    <string name="duration_string">Duración</string>
+    <string name="legs_string">Piernas</string>
+    <string name="shoulders_string">Espalda</string>
+    <string name="triceps_string">Tríceps</string>
+    <string name="weight_string">Peso</string>
+    <string name="add_photo_string">Añadir foto</string>
+    <string name="cancel_string">Cancelar</string>
+    <string name="choose_from_galery_string">Elegir de la galería</string>
+    <string name="use_camera_string">Utilizar cámara</string>
+</resources>
