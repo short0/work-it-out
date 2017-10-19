@@ -85,7 +85,7 @@ public class GraphActivity extends AppCompatActivity {
         final String dateLabels[] = new String[i];
         for (int q =0; q<i; q++)
         {
-            dateLabels[q] = tempDates.get(q);
+            dateLabels[q] = tempDates.get(q).substring(0, 5);
         }
         final StaticLabelsFormatter staticLabelsFormatter = new StaticLabelsFormatter(graph);
 
@@ -108,25 +108,34 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(getApplicationContext(),"Adding line graph",Toast.LENGTH_SHORT).show();
-                series.setColor(Color.GREEN);
-                series.setTitle("Line Graph");
-                graph.addSeries(series);
-                staticLabelsFormatter.setHorizontalLabels(dateLabels);
-                graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-                graph.getLegendRenderer().setVisible(true);
-                graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+                if (exerciseRecords.size() == 0)
+                {
+                    Toast.makeText(getApplicationContext(),"Please add some exercise records before trying to add line graph",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // Clear previous graph
+                    graph.removeAllSeries();
+                    graph2.removeAllSeries();
 
-                series2.setColor(Color.GREEN);
-                series2.setTitle("Line Graph");
-                graph2.addSeries(series2);
-                staticLabelsFormatter2.setHorizontalLabels(dateLabels);
-                graph2.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter2);
-                graph2.getLegendRenderer().setVisible(true);
-                graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+                    Toast.makeText(getApplicationContext(), "Adding line graph", Toast.LENGTH_SHORT).show();
+                    series.setColor(Color.GREEN);
+                    series.setTitle("Line Graph");
+                    graph.addSeries(series);
+                    staticLabelsFormatter.setHorizontalLabels(dateLabels);
+                    graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+                    graph.getLegendRenderer().setVisible(true);
+                    graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
-                lineBtn.setClickable(false);
+                    series2.setColor(Color.GREEN);
+                    series2.setTitle("Line Graph");
+                    graph2.addSeries(series2);
+                    staticLabelsFormatter2.setHorizontalLabels(dateLabels);
+                    graph2.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter2);
+                    graph2.getLegendRenderer().setVisible(true);
+                    graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
+//                lineBtn.setClickable(false);
+                }
 
             }
 
@@ -136,26 +145,35 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(getApplicationContext(),"Adding bar graph",Toast.LENGTH_SHORT).show();
-                //series3.setColor(Color.MAGENTA);
-                series3.setTitle("Bar Graph");
-                graph.addSeries(series3);
-                staticLabelsFormatter.setHorizontalLabels(dateLabels);
-                graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-                graph.getLegendRenderer().setVisible(true);
-                graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
-                series3.setSpacing(15);
+                if (exerciseRecords.size() == 0)
+                {
+                    Toast.makeText(getApplicationContext(),"Please add some exercise records before trying to add bar graph",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // Clear previous graph
+                    graph.removeAllSeries();
+                    graph2.removeAllSeries();
 
-                //series4.setColor(Color.MAGENTA);
-                series4.setTitle("Bar Graph");
-                graph2.addSeries(series4);
-                staticLabelsFormatter2.setHorizontalLabels(dateLabels);
-                graph2.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter2);
-                graph2.getLegendRenderer().setVisible(true);
-                graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+                    Toast.makeText(getApplicationContext(), "Adding bar graph", Toast.LENGTH_SHORT).show();
+                    //series3.setColor(Color.MAGENTA);
+                    series3.setTitle("Bar Graph");
+                    graph.addSeries(series3);
+                    staticLabelsFormatter.setHorizontalLabels(dateLabels);
+                    graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+                    graph.getLegendRenderer().setVisible(true);
+                    graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+                    series3.setSpacing(15);
 
-                barBtn.setClickable(false);
+                    //series4.setColor(Color.MAGENTA);
+                    series4.setTitle("Bar Graph");
+                    graph2.addSeries(series4);
+                    staticLabelsFormatter2.setHorizontalLabels(dateLabels);
+                    graph2.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter2);
+                    graph2.getLegendRenderer().setVisible(true);
+                    graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
+//                barBtn.setClickable(false);
+                }
             }
         });
 
@@ -163,24 +181,34 @@ public class GraphActivity extends AppCompatActivity {
             @Override
             public void onClick(View view)
             {
-                Toast.makeText(getApplicationContext(),"Adding point graph",Toast.LENGTH_SHORT).show();
-                series5.setColor(Color.MAGENTA);
-                series5.setTitle("Point Graph");
-                graph.addSeries(series5);
-                staticLabelsFormatter.setHorizontalLabels(dateLabels);
-                graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
-                graph.getLegendRenderer().setVisible(true);
-                graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+                if (exerciseRecords.size() == 0)
+                {
+                    Toast.makeText(getApplicationContext(),"Please add some exercise records before trying to add line graph",Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    // Clear previous graph
+                    graph.removeAllSeries();
+                    graph2.removeAllSeries();
 
-                series6.setColor(Color.MAGENTA);
-                series6.setTitle("Point Graph");
-                graph2.addSeries(series6);
-                staticLabelsFormatter2.setHorizontalLabels(dateLabels);
-                graph2.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter2);
-                graph2.getLegendRenderer().setVisible(true);
-                graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+                    Toast.makeText(getApplicationContext(), "Adding point graph", Toast.LENGTH_SHORT).show();
+                    series5.setColor(Color.MAGENTA);
+                    series5.setTitle("Point Graph");
+                    graph.addSeries(series5);
+                    staticLabelsFormatter.setHorizontalLabels(dateLabels);
+                    graph.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter);
+                    graph.getLegendRenderer().setVisible(true);
+                    graph.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
 
-                pointBtn.setClickable(false);
+                    series6.setColor(Color.MAGENTA);
+                    series6.setTitle("Point Graph");
+                    graph2.addSeries(series6);
+                    staticLabelsFormatter2.setHorizontalLabels(dateLabels);
+                    graph2.getGridLabelRenderer().setLabelFormatter(staticLabelsFormatter2);
+                    graph2.getLegendRenderer().setVisible(true);
+                    graph2.getLegendRenderer().setAlign(LegendRenderer.LegendAlign.TOP);
+
+//                pointBtn.setClickable(false);
+                }
             }
         });
 

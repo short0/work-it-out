@@ -81,7 +81,7 @@ public class BodyFatCalculatorActivity extends AppCompatActivity {
                     if (male.isChecked())
                     {
                         bodyFat = calcBodyFatMale(Double.parseDouble(waist.getText().toString()), Double.parseDouble(neck.getText().toString()), Double.parseDouble(height.getText().toString()));
-                        bodyFat = (double) Math.round(bodyFat * 10d) / 10d;
+                        bodyFat = (double) Math.round(bodyFat * 100d) / 100d;
                         tvBodyFat.setText(Double.toString(bodyFat) + "%");
 
                         if (record != null) {
@@ -99,7 +99,7 @@ public class BodyFatCalculatorActivity extends AppCompatActivity {
                     {
                         bodyFat = calcBodyFatFemale(Double.parseDouble(waist.getText().toString()), Double.parseDouble(hip.getText().toString())
                                 , Double.parseDouble(neck.getText().toString()), Double.parseDouble(height.getText().toString()));
-                        bodyFat = (double) Math.round(bodyFat * 10d) / 10d;
+                        bodyFat = (double) Math.round(bodyFat * 100d) / 100d;
                         tvBodyFat.setText(Double.toString(bodyFat) + "%");
 
                         if (record != null) {

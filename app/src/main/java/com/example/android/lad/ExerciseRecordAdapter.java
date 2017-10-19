@@ -125,7 +125,7 @@ public class ExerciseRecordAdapter extends ArrayAdapter<ExerciseRecord> {
 
     private String formatBodyFatPercentage(String bodyFatPercentage) {
         double temp = Double.parseDouble(bodyFatPercentage);
-        DecimalFormat bodyFatPercentageFormat = new DecimalFormat("0.0");
+        DecimalFormat bodyFatPercentageFormat = new DecimalFormat("0.00");
         return bodyFatPercentageFormat.format(temp);
     }
 
