@@ -2,51 +2,88 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal">
+    android:layout_height="?android:attr/listPreferredItemHeight"
+    android:orientation="horizontal"
 
-    <EditText
-        android:id="@+id/date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="dd/mm/yyyy"
-        android:maxLength="10" />
+    android:paddingLeft="16dp"
+    android:paddingRight="8dp">
 
-    <EditText
-        android:id="@+id/weight"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="      kg"
-        android:maxLength="8" />
+
+    <TextView
+        android:id="@+id/duration"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/duration_circle"
+        android:fontFamily="sans-serif-medium"
+        android:gravity="center"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        tools:text="2" />
+
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textSize="12sp"
+            tools:text="11/11/2000" />
+
+        <TextView
+            android:id="@+id/weight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="16sp"
+            tools:text="50kg" />
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/camera_link"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_camera" />
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_weight="2"
+        android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/checkbox_link"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_directions" />
+        <TextView
+            android:id="@+id/body_parts"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:text="body parts" />
 
-    <ImageView
-        android:id="@+id/timepicker_link"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:src="@drawable/ic_schedule" />
+        <TextView
+            android:id="@+id/body_fat_percentage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="sans-serif-medium"
+            android:gravity="center_vertical"
+            android:text="Body fat: 10%" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/delete_record"
         android:layout_width="32dp"
         android:layout_height="32dp"
-        android:src="@drawable/ic_delete" />
+        android:layout_gravity="center_vertical"
+        android:src="@drawable/ic_delete"
+        android:contentDescription="Deleting record"/>
+
 </LinearLayout>

@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/main_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/root_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+            <ImageView
+                android:id="@+id/image_view"
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:src="@drawable/ic_body" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@android:color/black" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/date_string" />
+
+                    <TextView
+                        android:id="@+id/date_edit_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="dd/mm/yyyy"
+                        android:maxLength="10"
+                        android:inputType="date"
+                        android:maxLines="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/body_fat_string" />
+
+                    <TextView
+                        android:id="@+id/body_fat_percentage_edit_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="%"
+                        android:maxLength="5"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+
+                        android:text="@string/duration_string" />
+
+                    <EditText
+                        android:id="@+id/duration_edit_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="hours"
+                        android:maxLength="5"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/weight_string" />
+
+                    <EditText
+                        android:id="@+id/weight_edit_text"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:hint="kg"
+                        android:maxLength="5"
+                        android:inputType="numberDecimal"
+                        android:maxLines="1" />
+                </LinearLayout>
+
+
+
+                <LinearLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:paddingLeft="16dp"
+                        android:id="@+id/shoulders_checkbox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/shoulders_string" />
+
+                    <ImageView
+                        android:id="@+id/search_shoulders"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_search"
+                        android:contentDescription="Searching for shoulders exercises"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:paddingLeft="16dp"
+                        android:id="@+id/biceps_checkbox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/biceps_string" />
+
+                    <ImageView
+                        android:id="@+id/search_biceps"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_search"
+                        android:contentDescription="Searching for biceps exercises"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:paddingLeft="16dp"
+                        android:id="@+id/triceps_checkbox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/triceps_string" />
+
+                    <ImageView
+                        android:id="@+id/search_triceps"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_search"
+                        android:contentDescription="Searching for triceps exercises"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:paddingLeft="16dp"
+                        android:id="@+id/legs_checkbox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/legs_string" />
+
+                    <ImageView
+                        android:id="@+id/search_legs"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_search"
+                        android:contentDescription="Searching for legs exercises"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:paddingLeft="16dp"
+                        android:id="@+id/chest_checkbox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/chest_string" />
+
+                    <ImageView
+                        android:id="@+id/search_chest"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_search"
+                        android:contentDescription="Searching for chest exercises"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:paddingLeft="16dp"
+                        android:id="@+id/back_checkbox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/back_string" />
+
+                    <ImageView
+                        android:id="@+id/search_back"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_search"
+                        android:contentDescription="Searching for back exercises"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:padding="8dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <CheckBox
+                        android:paddingLeft="16dp"
+                        android:id="@+id/cardio_checkbox"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/cardio_string" />
+
+                    <ImageView
+                        android:id="@+id/search_cardio"
+                        android:layout_width="36dp"
+                        android:layout_height="36dp"
+                        android:src="@drawable/ic_search"
+                        android:contentDescription="Searching for cardio exercises"/>
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/fab_save"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:src="@drawable/ic_save"
+                app:fabSize="normal"
+                android:layout_gravity="right"
+                android:contentDescription="Saving record"/>
+        </LinearLayout>
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fab_take_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:src="@drawable/ic_take_picture"
+            app:fabSize="normal"
+            app:layout_anchor="@id/image_view"
+            app:layout_anchorGravity="bottom|right|end"
+            android:contentDescription="Add a photo"/>
+
+
+    </android.support.design.widget.CoordinatorLayout>
+
+
+</ScrollView>

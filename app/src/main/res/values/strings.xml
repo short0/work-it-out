@@ -1,3 +1,30 @@
 <resources>
-    <string name="app_name">LAD</string>
+    <string name="app_name">Work It Out</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="menu_calendar">Calendar</string>
+    <string name="menu_graph">Graph</string>
+    <string name="menu_body_fat_calculator">Body Fat Calculator</string>
+    <string name="menu_statistics">Statistics</string>
+    <string name="menu_delete_all_records">DELETE ALL RECORDS</string>
+
+    <string name="date_string">Date</string>
+    <string name="body_fat_string">Body fat %</string>
+    <string name="duration_string">Duration</string>
+    <string name="weight_string">Weight</string>
+
+    <string name="shoulders_string">Shoulders</string>
+    <string name="biceps_string">Biceps</string>
+    <string name="triceps_string">Triceps</string>
+    <string name="legs_string">Legs</string>
+    <string name="chest_string">Chest</string>
+    <string name="back_string">Back</string>
+    <string name="cardio_string">Cardio</string>
+
+    <string name="add_photo_string">Add Photo</string>
+    <string name="use_camera_string">Use Camera</string>
+    <string name="choose_from_galery_string">Choose from Gallery</string>
+    <string name="cancel_string">Cancel</string>
 </resources>
