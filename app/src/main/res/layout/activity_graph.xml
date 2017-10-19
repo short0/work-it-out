@@ -4,11 +4,65 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.example.android.lad.GraphActivity">
+    
+
+    <TextView
+        android:id="@+id/graph1Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Date vs Weight"
+        android:textColor="@android:color/black" />
 
     <com.jjoe64.graphview.GraphView
         android:layout_width="match_parent"
-        android:layout_height="200dip"
+        android:layout_height="211dp"
         android:id="@+id/graph" />
+
+    <TextView
+        android:id="@+id/graph2Text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Date vs Bodyfat%"
+        android:textColor="@android:color/black" />
+
+    <com.jjoe64.graphview.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="218dp"
+        android:id="@+id/graph2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation= "horizontal"
+        android:weightSum="1">
+
+        <Button
+            android:id="@+id/lineBtn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Line Graph"
+            android:layout_weight="0.50" />
+
+        <Button
+            android:id="@+id/barBtn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Bar Graph"
+            android:layout_weight="0.30" />
+
+        <Button
+            android:id="@+id/pointBtn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Point Graph"
+            android:layout_weight="0.36" />
+
+    </LinearLayout>
+
+
 
 </LinearLayout>

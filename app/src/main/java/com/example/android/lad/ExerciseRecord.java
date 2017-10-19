@@ -74,4 +74,5 @@ public class ExerciseRecord implements Serializable
     public void setmBodyParts(String mBodyParts) { this.mBodyParts = mBodyParts;}
     public void setmBodyFatPercentage(String mBodyFatPercentage) { this.mBodyFatPercentage = mBodyFatPercentage; }
     public void setmPhotoPath(String mPhotoPath) { this.mPhotoPath = mPhotoPath; }
+
 }
