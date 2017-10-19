@@ -73,7 +73,8 @@ public class MainActivity extends AppCompatActivity {
 
         // Find Record ListView in the layout
         recordsListView = (ListView) findViewById(R.id.records_list_view);
-
+        View emptyView = findViewById(R.id.empty_view);
+        recordsListView.setEmptyView(emptyView);
         // Create adapter for ListView
         adapter = new ExerciseRecordAdapter(this, exerciseRecords);
 
@@ -125,52 +126,7 @@ public class MainActivity extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
                 Log.d("Insert: ", "Notify adapter ...");
-//                // Reading all record
-//                Log.d("Reading: ", "Reading all records ...");
-//                exerciseRecords = database.getAllRecords();
-//                for (ExerciseRecord r : records) {
-//                    String log = "Id: "+ r.getID()
-//                            + " ,Duration: " + r.getmDuration()
-//                            + " ,Date: " + r.getmDate()
-//                            + " ,Weight: " + r.getmWeight();
-//                    // Writing Contacts to log
-//                    Log.d("Name: ", log);
-//                }
-//
-//                Log.d("Deleting: ", "Deleting all records ...");
-//                for (ExerciseRecord r : exerciseRecords){
-//                    database.deleteRecord(r);
-//                }
 
-//                DBHandler db = new DBHandler(getApplicationContext());
-//                // Inserting students
-//                Log.d("Insert: ", "Inserting ..");
-//                db.addStudent(new Student("Mat", "43540"));
-//
-//                // Reading all students
-//                Log.d("Reading: ", "Reading all students..");
-//                List<Student> students = db.getAllStudents();
-//                for (Student cn : students) {
-//                    String log = "Id: "+cn.getID()+" ,Name: " + cn.getName() + " ,Phone: "
-//                            + cn.getPhone();
-//                    // Writing Contacts to log
-//                    Log.d("Name: ", log);
-//                }
-//
-//                Log.d("Deleting: ", "Deleting all students..");
-//                for (Student cn : students){
-//                    db.deleteStudent(cn);
-//                }
-//
-//                getApplicationContext().deleteDatabase("studentsManager");
-//                String[] dbs = getApplicationContext().databaseList();
-//                try
-//                {
-//                    dbs[0].isEmpty();
-//                }
-//                catch (Exception e){
-//                    Log.d("list db: ", "No db");
-//                }
 
             }
         });
